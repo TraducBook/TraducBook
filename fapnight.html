@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fap Nights at Frenni's - TraducBook</title>
+    <style>
+        /* Thème sombre */
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #121212;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        nav {
+            margin-top: 1rem;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            margin: 0 1rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+        }
+
+        .lecteur-comics {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .lecteur-comics img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            cursor: pointer;
+        }
+
+        .nav-gauche, .nav-droite {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            cursor: pointer;
+        }
+
+        .nav-gauche {
+            left: 0;
+        }
+
+        .nav-droite {
+            right: 0;
+        }
+
+        .nav-gauche::before, .nav-droite::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-gauche::before {
+            left: 1rem;
+            content: '◄';
+        }
+
+        .nav-droite::before {
+            right: 1rem;
+            content: '►';
+        }
+
+        .annonce {
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 1.2rem;
+            color: #ff6f61;
+            display: none; /* Masqué par défaut */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>TraducBook</h1>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="comic.html">Catalogue</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2 id="titre-comic">Fap Nights at Frenni's Comic 1</h2>
+        <div class="lecteur-comics">
+            <div class="nav-gauche" onclick="pagePrecedente()"></div>
+            <div class="nav-droite" onclick="pageSuivante()"></div>
+            <img id="image-comic" src="images/comic1/FAPC1.jpg" alt="Page du comic">
+        </div>
+        <div class="annonce" id="annonce-fin">
+            Vous avez terminé ce comic. Passage au comic suivant...
+        </div>
+    </main>
+
+    <script>
+        // Données des comics
+        const comics = [
+            {
+                titre: "Fap Nights at Frenni's Comic 1",
+                dossier: "images/comic1/",
+                nombrePages: 21, // Nombre de pages du premier comic
+            },
+            {
+                titre: "Fap Nights at Frenni's Comic 2",
+                dossier: "images/comic2/",
+                nombrePages: 15, // Nombre de pages du deuxième comic
+            },
+        ];
+
+        let comicActuel = 0; // Index du comic actuel
+        let pageActuelle = 0; // Index de la page actuelle
+        let pages = []; // Liste des pages du comic actuel
+
+        // Générer les liens des pages pour un comic donné
+        function genererPages(dossier, nombrePages) {
+            const pages = [];
+            for (let i = 1; i <= nombrePages; i++) {
+                pages.push(`${dossier}FAPC${i}.jpg`);
+            }
+            return pages;
+        }
+
+        // Charger le comic actuel
+        function chargerComic() {
+            pages = genererPages(comics[comicActuel].dossier, comics[comicActuel].nombrePages);
+            document.getElementById('titre-comic').textContent = comics[comicActuel].titre;
+            pageActuelle = 0;
+            afficherPage();
+        }
+
+        // Afficher la page actuelle
+        function afficherPage() {
+            document.getElementById('image-comic').src = pages[pageActuelle];
+            document.getElementById('annonce-fin').style.display = 'none'; // Masquer l'annonce
+        }
+
+        // Fonctions de navigation
+        function pageSuivante() {
+            if (pageActuelle < pages.length - 1) {
+                pageActuelle++;
+                afficherPage();
+            } else if (comicActuel < comics.length - 1) {
+                // Passer au comic suivant
+                comicActuel++;
+                chargerComic();
+                // Afficher l'annonce
+                document.getElementById('annonce-fin').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('annonce-fin').style.display = 'none';
+                }, 3000); // Masquer l'annonce après 3 secondes
+            }
+        }
+
+        function pagePrecedente() {
+            if (pageActuelle > 0) {
+                // Revenir à la page précédente dans le comic actuel
+                pageActuelle--;
+                afficherPage();
+            } else if (comicActuel > 0) {
+                // Revenir au comic précédent
+                comicActuel--;
+                chargerComic();
+                pageActuelle = comics[comicActuel].nombrePages - 1; // Dernière page du comic précédent
+                afficherPage();
+            }
+        }
+
+        // Charger le premier comic au démarrage
+        chargerComic();
+    </script>
+</body>
+</html>
