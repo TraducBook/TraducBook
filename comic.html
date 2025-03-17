@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogue - TraducBook</title>
+    <style>
+        /* Thème sombre */
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #121212;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        nav {
+            margin-top: 1rem;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            margin: 0 1rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+        }
+
+        .catalogue {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1rem;
+            justify-content: center;
+        }
+
+        .vignette {
+            width: 150px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .vignette img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+
+        .vignette img:hover {
+            transform: scale(1.05);
+        }
+
+        .vignette p {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>TraducBook</h1>
+        <nav>
+            <a href="index.html">Accueil</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Catalogue des Comics</h2>
+        <div class="catalogue">
+            <div class="vignette" onclick="window.location.href='fapnight1.html'">
+                <img src="images/comic1/FAPC1.jpg" alt="Fap Nights at Frenni's">
+                <p>Fap Nights at Frenni's</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
